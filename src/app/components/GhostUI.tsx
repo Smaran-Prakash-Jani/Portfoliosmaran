@@ -55,36 +55,36 @@ export function GhostUI() {
 
       {/* Calibration Crosshairs & Circles - Top Left */}
       <motion.div 
-        className="absolute top-6 left-6 md:top-8 md:left-8 flex flex-col gap-3 opacity-60"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        className="absolute top-6 left-6 md:top-8 md:left-8 flex flex-col gap-3 opacity-100"
+        animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-12 h-12 border-[1px] border-white/20 rounded-full flex items-center justify-center relative">
+        <div className="w-12 h-12 border-[1px] border-white/50 rounded-full flex items-center justify-center relative">
           <motion.div 
-            animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0.2, 0.8], boxShadow: ["0 0 2px rgba(255,255,255,0)", "0 0 8px rgba(255,255,255,0.5)", "0 0 2px rgba(255,255,255,0)"] }}
+            animate={{ scale: [1, 1.8, 1], opacity: [1, 0.4, 1], boxShadow: ["0 0 4px rgba(255,255,255,0.2)", "0 0 12px rgba(255,255,255,0.9)", "0 0 4px rgba(255,255,255,0.2)"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-1.5 h-1.5 bg-white/80 rounded-full" 
+            className="w-1.5 h-1.5 bg-white rounded-full" 
           />
           <motion.div 
-            animate={{ scale: [0.8, 1, 0.8], opacity: [0.1, 0.3, 0.1] }}
+            animate={{ scale: [0.8, 1, 0.8], opacity: [0.3, 0.7, 0.3] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute inset-1 border-[1px] border-white/20 rounded-full" 
+            className="absolute inset-1 border-[1px] border-white/40 rounded-full" 
           />
-          <div className="absolute -top-2 bottom-0 w-[1px] bg-white/30 h-16" />
-          <div className="absolute -left-2 right-0 h-[1px] bg-white/30 w-16" />
+          <div className="absolute -top-2 bottom-0 w-[1px] bg-white/60 h-16" />
+          <div className="absolute -left-2 right-0 h-[1px] bg-white/60 w-16" />
         </div>
-        <span className="text-[10px] font-mono text-white/25 tracking-widest uppercase">
+        <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase">
           SYS.CAL // 0.001
         </span>
       </motion.div>
 
       {/* Data Labels - Top Right */}
-      <div className="absolute top-6 right-6 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-80">
+      <div className="absolute top-6 right-6 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-100">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono text-white/40 tracking-wider">
+          <span className="text-[11px] font-mono text-white/90 tracking-wider">
             {time}
           </span>
-          <span className="text-[9px] font-mono text-white/20 w-6 text-right">
+          <span className="text-[9px] font-mono text-white/60 w-6 text-right">
             {ms}
           </span>
         </div>
@@ -92,16 +92,16 @@ export function GhostUI() {
           {[...Array(5)].map((_, i) => (
             <motion.div 
               key={i} 
-              animate={{ opacity: [0.3, 0.9, 0.3] }}
+              animate={{ opacity: [0.6, 1, 0.6] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-              className={`w-3 h-[2px] ${i < 3 ? 'bg-white/60' : 'bg-white/20'}`} 
+              className={`w-3 h-[2px] ${i < 3 ? 'bg-white/90' : 'bg-white/40'}`} 
             />
           ))}
         </div>
         <motion.span 
-          animate={{ opacity: [0.2, 0.5, 0.2] }}
+          animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-          className="text-[9px] font-mono text-white/25 tracking-[0.2em] mt-2 uppercase"
+          className="text-[9px] font-mono text-white/70 tracking-[0.2em] mt-2 uppercase"
         >
           Data Stream: Active
         </motion.span>
