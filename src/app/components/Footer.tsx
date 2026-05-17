@@ -76,7 +76,9 @@ export function Footer() {
             </p>
 
             <a
-              href="mailto:contact@example.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=smaranprakash@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group/btn relative flex items-center justify-center gap-4 px-12 py-6 bg-transparent border border-white/20 text-white font-medium tracking-[0.15em] text-xs uppercase overflow-hidden transition-all duration-500 hover:border-white"
             >
               <div className="absolute inset-0 bg-white translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.22,1,0.36,1]" />

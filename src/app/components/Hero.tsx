@@ -188,7 +188,7 @@ export function Hero() {
               loop 
               muted 
               playsInline
-              className="w-full h-full object-contain" 
+              className="w-full h-full object-contain mix-blend-screen" 
             />
           </motion.div>
 
