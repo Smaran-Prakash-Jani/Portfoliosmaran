@@ -279,7 +279,7 @@ export function Hero() {
 
           {/* Symmetrical, properly scaled, without rotation to ensure balance */}
           <h1 className="relative z-10 select-none flex flex-col items-center drop-shadow-[0_10px_40px_rgba(0,0,0,0.9)]">
-            <span className="block font-['Pinyon_Script'] text-6xl md:text-[7rem] lg:text-[8.5rem] font-normal text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] -mb-4 md:-mb-8 z-10">Architecting</span>
+            <span className="block font-['Pinyon_Script'] text-6xl md:text-[7rem] lg:text-[8.5rem] font-normal text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] mb-2 md:mb-4 z-10">Architecting</span>
             <span className="block font-['Montserrat'] text-[2.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-extrabold uppercase tracking-[0.15em] text-white/95 leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] pl-[0.15em]">
                Intelligence
             </span>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import sphereVideo from "../../imports/37a7390a12291015429da39931bf1e58.mp4";
 
 interface SystemResumePanelProps {
   isOpen: boolean;
@@ -161,18 +162,31 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 1.0, duration: 0.2, ease: "linear" }}
-                    className="flex flex-col gap-2"
+                    className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
                   >
-                    <h1 className="text-3xl md:text-5xl font-light tracking-[0.1em] text-white uppercase">
-                      Smaran Prakash Jani
-                    </h1>
-                    <h2 className="text-sm md:text-base tracking-[0.3em] text-[#8B5CF6] uppercase">
-                      Founder / Technologist
-                    </h2>
-                    <p className="mt-4 max-w-2xl text-xs md:text-sm text-white/50 font-mono leading-relaxed uppercase relative group">
-                      <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#8B5CF6]">_</span>
-                      &gt; Specialized in crafting high-end digital experiences, merging visionary design with robust engineering architectures.
-                    </p>
+                    <div className="flex flex-col gap-2 flex-1">
+                      <h1 className="text-3xl md:text-5xl font-light tracking-[0.1em] text-white uppercase">
+                        Smaran Prakash Jani
+                      </h1>
+                      <h2 className="text-sm md:text-base tracking-[0.3em] text-[#8B5CF6] uppercase">
+                        Founder / Technologist
+                      </h2>
+                      <p className="mt-4 max-w-2xl text-xs md:text-sm text-white/50 font-mono leading-relaxed uppercase relative group">
+                        <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#8B5CF6]">_</span>
+                        &gt; Specialized in crafting high-end digital experiences, merging visionary design with robust engineering architectures.
+                      </p>
+                    </div>
+                    
+                    <div className="relative w-40 h-40 shrink-0 overflow-hidden pointer-events-none opacity-50">
+                      <video 
+                        src={sphereVideo} 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        className="w-full h-full object-contain mix-blend-screen" 
+                      />
+                    </div>
                   </motion.div>
 
                   {/* Grid Layout */}
