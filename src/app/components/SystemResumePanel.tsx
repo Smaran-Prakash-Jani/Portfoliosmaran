@@ -177,7 +177,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       </p>
                     </div>
                     
-                    <div className="relative w-40 h-40 shrink-0 overflow-hidden pointer-events-none opacity-50">
+                    <div className="relative w-40 h-40 shrink-0 self-center md:self-auto overflow-hidden pointer-events-none opacity-50">
                       <video 
                         src={sphereVideo} 
                         autoPlay 
