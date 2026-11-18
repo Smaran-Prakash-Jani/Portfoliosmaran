@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { ArrowUpRight, Lock } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function Projects() {
@@ -13,6 +14,7 @@ export function Projects() {
     visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } },
   };
 
+  // Earlier work. The links are private for now.
   const projects = [
     {
       id: '01',
@@ -44,11 +46,39 @@ export function Projects() {
     },
   ];
 
+  // Recent builds, listed simply with their links.
+  const recentProjects = [
+    {
+      id: '05',
+      title: 'CRM Technology',
+      category: 'Client / Full-Stack Commerce',
+      description: 'The standalone commerce platform for a South African IT hardware retailer, replacing their Shopify store: storefront, dealer portal, quotes and PDF invoices, a compatibility-checked PC builder, and an admin with mandatory two-factor auth.',
+      stack: ['Next.js 16', 'PostgreSQL', 'Drizzle', 'TypeScript'],
+      links: [{ label: 'Live site', href: 'https://crm-technology-platform.vercel.app' }],
+    },
+    {
+      id: '06',
+      title: 'PowBI',
+      category: 'AI / Data',
+      description: 'Conversational business intelligence. Upload a CSV, ask a question in plain English, and PowBI writes the SQL with Gemini and answers with interactive charts and KPIs.',
+      stack: ['React', 'FastAPI', 'Pandas', 'Gemini', 'Plotly'],
+      links: [{ label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/PowBI' }],
+    },
+    {
+      id: '07',
+      title: 'BlackTrace',
+      category: 'Security / AI',
+      description: 'AI-native URL intelligence. Every link runs through brand-impersonation, entropy, redirect-chain and TLD analyzers plus live threat feeds; a risk engine scores it and explains the verdict in plain English.',
+      stack: ['FastAPI', 'Next.js', 'Python', 'Threat Intel'],
+      links: [{ label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/BlackTrace' }],
+    },
+  ];
+
   return (
-    <section id="projects" className="relative w-full max-w-[90rem] mx-auto px-8 md:px-12 py-32 md:py-40 z-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-32">
+    <section id="projects" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 py-16 md:py-40 z-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12 mb-14 md:mb-32">
         <div className="flex-1">
-          <div className="flex items-center gap-6 mb-12 w-full">
+          <div className="flex items-center gap-6 mb-8 md:mb-12 w-full">
             <div className="flex flex-col gap-1">
               <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
                 <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />
@@ -56,14 +86,14 @@ export function Projects() {
               </h2>
               <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 pl-4">SEC.02_PRJ</span>
             </div>
-            
+
             <div className="flex-1 h-[1px] bg-white/[0.05] relative mx-4">
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/20 rounded-full" />
               <div className="absolute left-[20%] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/20" />
               <div className="absolute left-[70%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/20" />
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/20" />
             </div>
-            
+
             <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 hidden md:block">DATA.BLK_02</span>
           </div>
           <h3 className="text-5xl md:text-7xl lg:text-9xl font-medium tracking-tighter text-white leading-[0.9] max-w-4xl">
@@ -71,7 +101,7 @@ export function Projects() {
           </h3>
         </div>
         <p className="text-white/50 max-w-sm text-lg md:text-xl font-light tracking-wide leading-[1.7] pb-4">
-          Four distinct projects. Built at the intersection of intelligence and design.
+          Seven projects. Built at the intersection of intelligence and design.
         </p>
       </div>
 
@@ -80,7 +110,7 @@ export function Projects() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-200px' }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-32 md:gap-y-48"
+        className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-14 md:gap-y-48"
       >
         {projects.map((project, idx) => (
           <motion.div
@@ -120,10 +150,10 @@ export function Projects() {
               </div>
 
               <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-transparent transition-colors duration-[1.5s] ease-out" />
-              <ImageWithFallback 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-full object-cover object-center grayscale-[0.8] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-[1.5s] ease-[0.22,1,0.36,1]" 
+              <ImageWithFallback
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover object-center grayscale-[0.8] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-[1.5s] ease-[0.22,1,0.36,1]"
               />
             </div>
 
@@ -137,7 +167,7 @@ export function Projects() {
                   (0{idx + 1})
                 </span>
               </div>
-              
+
               <div className="flex flex-col md:flex-row justify-between gap-6 pt-2">
                 <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] font-medium w-1/3">
                   {project.category}
@@ -146,10 +176,93 @@ export function Projects() {
                   {project.description}
                 </p>
               </div>
+
+              {/* Private link notice */}
+              <div className="flex items-center gap-2 pt-4 mt-2 border-t border-white/[0.04] font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+                <Lock className="w-3 h-3 shrink-0" />
+                Link made private for a while
+              </div>
             </div>
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Recent Builds: simple rows with links */}
+      <div className="mt-24 md:mt-56">
+        <div className="flex items-center gap-6 mb-8 md:mb-12 w-full">
+          <div className="flex flex-col gap-1">
+            <h3 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
+              <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />
+              02.B // Recent Builds
+            </h3>
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 pl-4">SEC.02_LOG</span>
+          </div>
+          <div className="flex-1 h-[1px] bg-white/[0.05] relative mx-4">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/20 rounded-full" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/20" />
+          </div>
+        </div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          className="flex flex-col border-t border-white/[0.06]"
+        >
+          {recentProjects.map((project) => (
+            <motion.div
+              key={project.id}
+              variants={itemVariants}
+              className="group grid grid-cols-1 md:grid-cols-[4rem_minmax(0,1fr)_minmax(0,1.6fr)] gap-4 md:gap-12 py-10 md:py-14 border-b border-white/[0.06] hover:border-white/20 transition-colors duration-700"
+            >
+              <span className="font-mono text-[10px] text-white/20 tracking-widest md:pt-3">({project.id})</span>
+
+              <div className="flex flex-col gap-3">
+                <h4 className="text-3xl md:text-4xl font-medium text-white tracking-tighter">
+                  {project.title}
+                </h4>
+                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] font-medium">
+                  {project.category}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-6">
+                <p className="text-white/50 text-base md:text-lg font-light leading-relaxed">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap items-center justify-between gap-6">
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 border border-white/[0.08] font-mono text-[9px] uppercase tracking-widest text-white/40"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-6">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link relative inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                        <ArrowUpRight className="w-3 h-3 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                        <span className="absolute -bottom-1 left-0 w-full h-px bg-[#8B5CF6] scale-x-0 group-hover/link:scale-x-100 transition-transform origin-left" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }

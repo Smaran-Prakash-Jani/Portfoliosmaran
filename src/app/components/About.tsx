@@ -23,16 +23,16 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="relative w-full max-w-[90rem] mx-auto px-8 md:px-12 pt-40 md:pt-48 pb-32 md:pb-40 z-10">
+    <section id="about" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 pt-24 md:pt-48 pb-16 md:pb-40 z-10">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-100px' }}
-        className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-24 lg:gap-40 items-start"
+        className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-14 md:gap-24 lg:gap-40 items-start"
       >
         <div>
-          <motion.div variants={childVariants} className="flex items-center gap-6 mb-16 w-full">
+          <motion.div variants={childVariants} className="flex items-center gap-6 mb-10 md:mb-16 w-full">
             <div className="flex flex-col gap-1">
               <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
                 <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />

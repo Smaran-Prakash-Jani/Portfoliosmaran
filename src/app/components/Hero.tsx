@@ -60,7 +60,7 @@ export function Hero() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
         
         {/* Ambient Left-Side HUD Frame */}
-        <div className="absolute top-0 bottom-0 left-0 w-24 md:w-32 pointer-events-none z-10">
+        <div className="absolute top-0 bottom-0 left-0 w-32 pointer-events-none z-10 hidden md:block">
           <div className="absolute top-0 bottom-0 left-4 md:left-8 w-[1px] bg-gradient-to-b from-transparent via-white/[0.3] to-transparent" />
           
           <div className="absolute top-32 left-8 md:left-12 flex flex-col gap-1.5 opacity-[0.7]">
@@ -107,8 +107,8 @@ export function Hero() {
         </div>
 
         {/* Cyberpunk Tracking Markers - Made more prominent */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[1200px] max-h-[800px] pointer-events-none opacity-[0.6] flex items-center justify-center">
-          <div className="absolute top-12 md:top-24 w-[calc(100%-4rem)] md:w-[calc(100%-8rem)] flex justify-between">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[1200px] max-h-[800px] pointer-events-none opacity-[0.45] md:opacity-[0.6] flex items-center justify-center">
+          <div className="absolute top-24 w-[calc(100%-8rem)] hidden md:flex justify-between">
             <div className="relative w-[1px] h-8 bg-white/50">
               <motion.div animate={{ height: ['0%', '100%'], opacity: [0, 1, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} className="absolute top-0 -left-[1px] w-[2px] bg-[#8B5CF6]/80" />
             </div>
@@ -258,13 +258,13 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 2, delay: 0.8, ease }}
-          className="flex items-center gap-8 mb-16 md:mb-20"
+          className="flex items-center gap-3 md:gap-8 mb-10 md:mb-20"
         >
-          <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#8B5CF6]/30" />
-          <span className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-white/70 font-medium">
+          <div className="w-6 md:w-16 h-[1px] bg-gradient-to-r from-transparent to-[#8B5CF6]/30" />
+          <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.5em] whitespace-nowrap text-white/70 font-medium">
             Smaran Prakash Jani
           </span>
-          <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#8B5CF6]/30" />
+          <div className="w-6 md:w-16 h-[1px] bg-gradient-to-l from-transparent to-[#8B5CF6]/30" />
         </motion.div>
 
         {/* Master Headline - Perfectly symmetrical, elegant sizing within the bubble */}
@@ -280,7 +280,7 @@ export function Hero() {
           {/* Symmetrical, properly scaled, without rotation to ensure balance */}
           <h1 className="relative z-10 select-none flex flex-col items-center drop-shadow-[0_10px_40px_rgba(0,0,0,0.9)]">
             <span className="block font-['Pinyon_Script'] text-6xl md:text-[7rem] lg:text-[8.5rem] font-normal text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] mb-2 md:mb-4 z-10">Architecting</span>
-            <span className="block font-['Montserrat'] text-[2.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-extrabold uppercase tracking-[0.15em] text-white/95 leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] pl-[0.15em]">
+            <span className="block font-['Montserrat'] text-[clamp(1.5rem,8.4vw,2.5rem)] md:text-[clamp(3.5rem,7vw,5.5rem)] font-extrabold uppercase tracking-[0.15em] text-white/95 leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] pl-[0.15em]">
                Intelligence
             </span>
           </h1>
@@ -303,7 +303,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 2.5, ease }}
-        className="absolute bottom-[-125px] md:bottom-[-175px] left-1/2 -translate-x-1/2 flex flex-col items-center justify-center cursor-pointer z-30 group"
+        className="absolute bottom-[-175px] left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center justify-center cursor-pointer z-30 group"
         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
       >
         <div className="w-[1px] h-[250px] md:h-[350px] bg-gradient-to-b from-transparent via-white/[0.1] to-transparent relative overflow-hidden group-hover:via-[#8B5CF6]/30 transition-colors duration-500">
@@ -331,7 +331,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 3, ease }}
-        className="absolute bottom-0 left-0 w-full flex justify-between items-end px-8 md:px-16 pb-12 pointer-events-none z-10"
+        className="absolute bottom-0 left-0 w-full hidden md:flex justify-between items-end px-16 pb-12 pointer-events-none z-10"
       >
         <div className="flex flex-col gap-3 opacity-60">
           <div className="flex items-center gap-2">

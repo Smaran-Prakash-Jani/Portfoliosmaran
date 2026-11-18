@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -11,7 +11,10 @@ import { GhostUI } from './components/GhostUI';
 import { SystemResumePanel } from './components/SystemResumePanel';
 
 export default function App() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Motion values update the glow directly, without re-rendering the whole page on every mouse move
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
+  const glowBackground = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.03), transparent 40%)`;
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
@@ -27,23 +30,20 @@ export default function App() {
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
     
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
     return () => window.removeEventListener('mousemove', updateMousePosition);
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <div className="min-h-screen bg-[#030303] text-[#E5E5E5] selection:bg-white/20 selection:text-white font-sans overflow-x-hidden antialiased">
       {/* Global Mouse Glow Effect - Ultra Subtle */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500 opacity-100"
-        style={{
-          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.03), transparent 40%)`
-        }}
+        style={{ background: glowBackground }}
       />
       
       {/* Cinematic Film Grain */}

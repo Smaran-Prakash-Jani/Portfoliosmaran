@@ -207,9 +207,8 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       
                       <div className="flex flex-col gap-8 border-l border-white/5 pl-4">
                         {[
-                          { year: "2024—PRES", role: "Chief Architect", corp: "STEALTH LABS", desc: "Leading frontend engineering for spatial OS interfaces." },
-                          { year: "2021—2024", role: "Sr. Software Engineer", corp: "NEXUS SYSTEMS", desc: "Designed and implemented massive-scale web applications with React & Node." },
-                          { year: "2018—2021", role: "Creative Developer", corp: "AGENCY X", desc: "Built award-winning experiential marketing websites." }
+                          { year: "2026—PRES", role: "Full-Stack Developer", corp: "CRM TECHNOLOGY · FREELANCE", desc: "Designed and built the company's own commerce platform to replace their Shopify store: storefront, dealer portal, quotes and PDF invoices, PC builder and a 2FA-secured admin. Live in production." },
+                          { year: "2025", role: "Cyber Security Intern", corp: "CODEALPHA", desc: "Built a Python password-strength checker and a socket-based port scanner, and wrote a security-awareness report on phishing and malware." }
                         ].map((item, idx) => (
                           <div key={idx} className="group relative flex flex-col gap-2">
                             <div className="absolute -left-[21px] top-1.5 w-[9px] h-[1px] bg-white/20 group-hover:bg-[#8B5CF6] transition-colors" />
@@ -245,7 +244,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                         </div>
                         
                         <div className="flex flex-wrap gap-3">
-                          {["TypeScript", "React", "Next.js", "Framer Motion", "TailwindCSS", "Node.js", "System Design", "UI/UX Architecture"].map((skill, idx) => (
+                          {["TypeScript", "React", "Next.js", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Python", "FastAPI", "Rust", "LLM Integration", "UI/UX Design"].map((skill, idx) => (
                             <div 
                               key={idx}
                               className="px-3 py-1.5 border border-white/10 text-white/60 hover:text-white hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/5 transition-all font-mono text-[10px] uppercase tracking-widest cursor-default hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]"
@@ -270,21 +269,31 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                         </div>
                         
                         <div className="flex flex-col gap-4">
-                          {[
-                            { name: "GHOST_OS", status: "ONLINE", desc: "A cinematic personal operating system interface." },
-                            { name: "AETHER_UI", status: "DEPRECATED", desc: "React component library for minimalist design." }
-                          ].map((proj, idx) => (
-                            <div key={idx} className="group p-4 border border-white/5 bg-white/[0.01] hover:bg-[#8B5CF6]/[0.02] hover:border-[#8B5CF6]/30 transition-all flex flex-col gap-3 relative overflow-hidden">
-                              <div className="absolute top-0 left-0 w-1 h-full bg-white/10 group-hover:bg-[#8B5CF6] transition-colors" />
-                              <div className="flex items-center justify-between pl-2">
-                                <span className="font-mono text-[11px] text-white tracking-widest group-hover:text-[#8B5CF6] transition-colors">{proj.name}</span>
-                                <span className={`font-mono text-[9px] tracking-widest ${proj.status === 'ONLINE' ? 'text-[#8B5CF6] animate-pulse' : 'text-white/30'}`}>
-                                  [{proj.status}]
-                                </span>
-                              </div>
-                              <p className="font-mono text-[10px] text-white/40 pl-2">{proj.desc}</p>
-                            </div>
-                          ))}
+                          {([
+                            { name: "GHOST_OS", status: "PRIVATE", desc: "A cinematic personal operating system interface. Link made private for a while." },
+                            { name: "AETHER_UI", status: "PRIVATE", desc: "React component library for minimalist design. Link made private for a while." },
+                            { name: "AURA", status: "ONLINE", desc: "Base44 Ideathon prototype that encodes an emotional memory into a 5-character code you can decode later.", href: "https://aura-09d1828b.base44.app/" },
+                            { name: "A11YSHIP", status: "PROTOTYPE", desc: "AI accessibility auditor: paste a URL, get every WCAG violation explained in plain English with the exact code fix." },
+                            { name: "DRIVER_DOCTOR", status: "IN DEV", desc: "Read-only Rust + GTK4 desktop app that reports hardware, active drivers, firmware and pending updates across apt, dnf and pacman distros." }
+                          ] as { name: string; status: string; desc: string; href?: string }[]).map((proj, idx) => {
+                            const Card = proj.href ? 'a' : 'div';
+                            return (
+                              <Card
+                                key={idx}
+                                {...(proj.href ? { href: proj.href, target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                className="group p-4 border border-white/5 bg-white/[0.01] hover:bg-[#8B5CF6]/[0.02] hover:border-[#8B5CF6]/30 transition-all flex flex-col gap-3 relative overflow-hidden"
+                              >
+                                <div className="absolute top-0 left-0 w-1 h-full bg-white/10 group-hover:bg-[#8B5CF6] transition-colors" />
+                                <div className="flex items-center justify-between pl-2">
+                                  <span className="font-mono text-[11px] text-white tracking-widest group-hover:text-[#8B5CF6] transition-colors">{proj.name}</span>
+                                  <span className={`font-mono text-[9px] tracking-widest ${proj.status === 'ONLINE' ? 'text-[#8B5CF6] animate-pulse' : 'text-white/30'}`}>
+                                    [{proj.status}]
+                                  </span>
+                                </div>
+                                <p className="font-mono text-[10px] text-white/40 pl-2">{proj.desc}</p>
+                              </Card>
+                            );
+                          })}
                         </div>
                       </motion.div>
 
@@ -306,7 +315,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     </div>
                     
                     <div className="flex items-center gap-8">
-                      <a href="mailto:contact@example.com" className="font-mono text-[10px] tracking-[0.2em] text-white/60 hover:text-white transition-colors uppercase relative group">
+                      <a href="mailto:smaranprakash@gmail.com"className="font-mono text-[10px] tracking-[0.2em] text-white/60 hover:text-white transition-colors uppercase relative group">
                         INITIATE_CONTACT
                         <div className="absolute -bottom-1 left-0 w-full h-px bg-[#8B5CF6] scale-x-0 group-hover:scale-x-100 transition-transform origin-left shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
                       </a>

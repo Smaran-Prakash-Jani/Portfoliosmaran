@@ -38,6 +38,10 @@ export function GhostUI() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden">
+      {/* Phones: soft fades so text scrolling under the HUD stays readable */}
+      <div className="md:hidden absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#030303] via-[#030303]/80 to-transparent" />
+      <div className="md:hidden absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#030303]/90 to-transparent" />
+
       {/* Subtle Scanner Lines - Gentle moving vertical background pattern */}
       <motion.div 
         animate={{ backgroundPosition: ["0px 0px", "0px 100px"] }}
@@ -50,12 +54,12 @@ export function GhostUI() {
       />
       
       {/* Vertical Tech Lines */}
-      <div className="absolute top-0 bottom-0 left-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
-      <div className="absolute top-0 bottom-0 right-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
+      <div className="hidden md:block absolute top-0 bottom-0 left-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
+      <div className="hidden md:block absolute top-0 bottom-0 right-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
 
       {/* Calibration Crosshairs & Circles - Top Left */}
       <motion.div 
-        className="absolute top-6 left-6 md:top-8 md:left-8 flex flex-col gap-3 opacity-100"
+        className="absolute top-4 left-4 md:top-8 md:left-8 flex flex-col gap-3 opacity-100 scale-[0.7] md:scale-100 origin-top-left"
         animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -79,12 +83,12 @@ export function GhostUI() {
       </motion.div>
 
       {/* Data Labels - Top Right */}
-      <div className="absolute top-6 right-6 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-100">
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-100 scale-[0.85] md:scale-100 origin-top-right">
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-mono text-white/90 tracking-wider">
             {time}
           </span>
-          <span className="text-[9px] font-mono text-white/60 w-6 text-right">
+          <span className="hidden md:inline text-[9px] font-mono text-white/60 w-6 text-right">
             {ms}
           </span>
         </div>
@@ -109,12 +113,12 @@ export function GhostUI() {
 
       {/* Frame Corners - Bottom Left */}
       <motion.div 
-        className="absolute bottom-6 left-6 md:bottom-8 md:left-8 flex flex-col gap-2"
+        className="absolute bottom-3 left-3 md:bottom-8 md:left-8 flex flex-col gap-2"
         animate={{ opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-12 h-12 border-l-[1px] border-b-[1px] border-white/[0.35]" />
-        <div className="flex gap-2 text-[10px] font-mono text-white/25 tracking-widest">
+        <div className="w-5 h-5 md:w-12 md:h-12 border-l-[1px] border-b-[1px] border-white/[0.35]" />
+        <div className="hidden md:flex gap-2 text-[10px] font-mono text-white/25 tracking-widest">
           <span>X: -14.2</span>
           <span className="text-white/10">//</span>
           <div className="flex gap-1">
@@ -126,18 +130,18 @@ export function GhostUI() {
 
       {/* Frame Corners - Bottom Right */}
       <motion.div 
-        className="absolute bottom-6 right-6 md:bottom-8 md:right-8 flex flex-col items-end gap-2"
+        className="absolute bottom-3 right-3 md:bottom-8 md:right-8 flex flex-col items-end gap-2"
         animate={{ opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
       >
-        <div className="w-12 h-12 border-r-[1px] border-b-[1px] border-white/[0.35]" />
-        <span className="text-[10px] font-mono text-white/25 tracking-widest uppercase mt-[-24px] mr-3">
+        <div className="w-5 h-5 md:w-12 md:h-12 border-r-[1px] border-b-[1px] border-white/[0.35]" />
+        <span className="hidden md:inline text-[10px] font-mono text-white/25 tracking-widest uppercase mt-[-24px] mr-3">
           PWR. 100%
         </span>
       </motion.div>
 
       {/* Screen Edge Ticks */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 flex flex-col gap-8 opacity-40">
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 hidden md:flex flex-col gap-8 opacity-40">
         {[...Array(10)].map((_, i) => (
           <div key={i} className="w-2 h-[1px] bg-white/40" />
         ))}

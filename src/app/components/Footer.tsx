@@ -14,7 +14,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="relative w-full max-w-[90rem] mx-auto px-8 md:px-12 py-32 md:py-48 z-10 overflow-hidden">
+    <footer id="contact" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 pt-16 pb-28 md:py-48 z-10 overflow-hidden">
       {/* Cinematic Ambient Glow */}
       <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none rounded-full" />
       
@@ -25,7 +25,7 @@ export function Footer() {
         viewport={{ once: true, margin: '-200px' }}
         className="flex flex-col text-center md:text-left relative z-10"
       >
-        <motion.div variants={itemVariants} className="flex items-center justify-center md:justify-start gap-6 mb-16 md:mb-24 w-full relative">
+        <motion.div variants={itemVariants} className="flex items-center justify-center md:justify-start gap-6 mb-10 md:mb-24 w-full relative">
           <div className="flex flex-col gap-1 text-left hidden md:flex">
             <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
               <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />
@@ -76,9 +76,7 @@ export function Footer() {
             </p>
 
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=smaranprakash@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:smaranprakash@gmail.com"
               className="group/btn relative flex items-center justify-center gap-4 px-12 py-6 bg-transparent border border-white/20 text-white font-medium tracking-[0.15em] text-xs uppercase overflow-hidden transition-all duration-500 hover:border-white"
             >
               <div className="absolute inset-0 bg-white translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.22,1,0.36,1]" />

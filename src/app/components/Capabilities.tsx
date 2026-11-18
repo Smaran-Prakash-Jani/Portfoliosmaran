@@ -26,7 +26,7 @@ function CapabilityCard({ item, index, isHovered, onHover, onLeave }: any) {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="group relative border-b border-white/[0.04] py-16 lg:py-24 flex flex-col lg:flex-row lg:items-start justify-between gap-12 cursor-pointer transition-colors duration-700 hover:border-[#8B5CF6]/30 overflow-hidden bg-transparent"
+      className="group relative border-b border-white/[0.04] py-10 md:py-16 lg:py-24 flex flex-col lg:flex-row lg:items-start justify-between gap-6 md:gap-12 cursor-pointer transition-colors duration-700 hover:border-[#8B5CF6]/30 overflow-hidden bg-transparent"
     >
       {/* Dynamic Hover Glow */}
       <motion.div 
@@ -123,8 +123,8 @@ export function Capabilities() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="capabilities" className="relative w-full max-w-[90rem] mx-auto px-8 md:px-12 py-32 md:py-40 z-10">
-      <div className="flex flex-col gap-8 mb-32 relative w-full">
+    <section id="capabilities" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 py-16 md:py-40 z-10">
+      <div className="flex flex-col gap-8 mb-10 md:mb-32 relative w-full">
         <div className="flex items-center gap-6 mb-4 w-full">
           <div className="flex flex-col gap-1">
             <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
