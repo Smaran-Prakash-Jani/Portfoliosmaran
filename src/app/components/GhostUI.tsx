@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useHudBackdrop } from './fx/hudBackdrop';
+
+/**
+ * A soft patch of the page colour behind a corner readout. It fades in only while the marquee band
+ * is on screen, so its big words don't swallow the small labels; elsewhere it is not there at all.
+ */
+function Backdrop({ on }: { on: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute -inset-x-10 -inset-y-6 -z-10 bg-[radial-gradient(closest-side,rgba(3,3,3,0.94)_70%,rgba(3,3,3,0))] transition-opacity duration-500"
+      style={{ opacity: on ? 1 : 0 }}
+    />
+  );
+}
 
 export function GhostUI() {
   const [time, setTime] = useState("00:00:00");
   const msRef = React.useRef<HTMLSpanElement>(null);
+  const backdrop = useHudBackdrop();
 
   const { scrollY } = useScroll();
   // Transform scroll position into a pseudo-coordinate
@@ -58,8 +74,10 @@ export function GhostUI() {
       <div className="hidden md:block absolute top-0 bottom-0 right-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.16] to-transparent" />
 
       {/* Calibration Crosshairs & Circles - Top Left */}
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 isolate">
+      <Backdrop on={backdrop} />
       <motion.div 
-        className="absolute top-4 left-4 md:top-8 md:left-8 flex flex-col gap-3 opacity-100 scale-[0.7] md:scale-100 origin-top-left"
+        className="flex flex-col gap-3 opacity-100 scale-[0.7] md:scale-100 origin-top-left"
         animate={{ opacity: [0.85, 1, 0.85] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -81,9 +99,11 @@ export function GhostUI() {
           SYS.CAL // 0.001
         </span>
       </motion.div>
+      </div>
 
       {/* Data Labels - Top Right */}
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-100 scale-[0.85] md:scale-100 origin-top-right">
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 flex flex-col items-end gap-1.5 opacity-100 scale-[0.85] md:scale-100 origin-top-right isolate">
+        <Backdrop on={backdrop} />
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-mono text-white/90 tracking-wider">
             {time}
@@ -112,8 +132,10 @@ export function GhostUI() {
       </div>
 
       {/* Frame Corners - Bottom Left */}
+      <div className="absolute bottom-3 left-3 md:bottom-8 md:left-8 isolate">
+      <Backdrop on={backdrop} />
       <motion.div 
-        className="absolute bottom-3 left-3 md:bottom-8 md:left-8 flex flex-col gap-2"
+        className="flex flex-col gap-2"
         animate={{ opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -127,10 +149,13 @@ export function GhostUI() {
           </div>
         </div>
       </motion.div>
+      </div>
 
       {/* Frame Corners - Bottom Right */}
+      <div className="absolute bottom-3 right-3 md:bottom-8 md:right-8 isolate">
+      <Backdrop on={backdrop} />
       <motion.div 
-        className="absolute bottom-3 right-3 md:bottom-8 md:right-8 flex flex-col items-end gap-2"
+        className="flex flex-col items-end gap-2"
         animate={{ opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
       >
@@ -139,6 +164,7 @@ export function GhostUI() {
           PWR. 100%
         </span>
       </motion.div>
+      </div>
 
       {/* Screen Edge Ticks */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 hidden md:flex flex-col gap-8 opacity-75">

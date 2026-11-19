@@ -96,7 +96,7 @@ export function Projects() {
       title: 'Vanguard OS',
       category: 'Design System / Architecture',
       image: 'https://images.unsplash.com/photo-1526906198213-3fdd3e9f94f7?crop=entropy&cs=tinysrgb&fit=max&auto=format&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwbWluaW1hbGlzdCUyMGFyY2hpdGVjdHVyZSUyMGFic3RyYWN0fGVufDF8fHx8MTc3NzMzMTg1M3ww&ixlib=rb-4.1.0&q=70&w=1080',
-      description: 'A matte-black, glassmorphic design language engineered for elite startup landing pages and minimal SAAS.',
+      description: 'A matte-black, glassmorphic design language engineered for startup landing pages and minimal SaaS products.',
     },
     {
       id: '04',

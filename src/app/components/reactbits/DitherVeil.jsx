@@ -380,6 +380,7 @@ const DitherVeil = ({
   contrast = 1.15,
   brightness = 0,
   revealRadius = 200,
+  burstWidth,
   softness = 0.6,
   linger = 1,
   rimColor = '#a78bfa',
@@ -408,6 +409,7 @@ const DitherVeil = ({
       contrast,
       brightness,
       revealRadius,
+      burstWidth,
       softness,
       linger,
       rimColor,
@@ -686,7 +688,8 @@ const DitherVeil = ({
       maskUniforms.uSoftness.value = s.softness;
       maskUniforms.uStrength.value = presence;
       maskUniforms.uFade.value = Math.max(fade, minFade);
-      viewUniforms.uBurstWidth.value = Math.max(60, s.revealRadius * 0.9);
+      // the click flash keeps its own width when one is given, so a smaller brush doesn't thin it
+      viewUniforms.uBurstWidth.value = Math.max(60, s.burstWidth ?? s.revealRadius * 0.9);
       renderer.render({ scene: maskMesh, target: masks[1] });
       masks.reverse();
       brush.px = brush.x;

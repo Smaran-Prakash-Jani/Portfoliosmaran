@@ -111,7 +111,8 @@ export function Portrait() {
                     paperColor="#e6e0ff"
                     contrast={1.2}
                     brightness={0.04}
-                    revealRadius={150}
+                    revealRadius={115}
+                    burstWidth={135}
                     softness={0.65}
                     linger={1.4}
                     rimColor="#a78bfa"

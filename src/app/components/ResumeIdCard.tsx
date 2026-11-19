@@ -42,7 +42,7 @@ export default function ResumeIdCard() {
 
       <div className="reflective-card__identity" style={{ marginTop: 10 }}>
         <h3 className="reflective-card__name">Smaran Prakash Jani</h3>
-        <p className="reflective-card__role">Founder / Technologist</p>
+        <p className="reflective-card__role">CS Student / Developer</p>
       </div>
       <div className="reflective-card__footer" style={{ marginTop: 16 }}>
         <div className="reflective-card__id">

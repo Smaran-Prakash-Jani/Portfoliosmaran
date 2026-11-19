@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { VelocityMarquee } from './fx/ScrollFx';
+import { setHudBackdrop } from './fx/hudBackdrop';
 
 const words = ['Artificial Intelligence', 'WebGL', 'Product Design', 'Machine Learning', 'Frontend Engineering', 'Startup Execution'];
 
 /** Two endless bands of keywords between Projects and Capabilities; they react to scroll speed. */
 export function MarqueeBand() {
+  const ref = useRef<HTMLDivElement>(null);
+  // while the band is on screen, the HUD's corner readouts get a dark backing so they stay readable
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setHudBackdrop(e.isIntersecting));
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      setHudBackdrop(false);
+    };
+  }, []);
+
   return (
-    <div aria-hidden="true" className="relative z-10 w-full py-10 md:py-20 select-none overflow-x-clip">
+    <div ref={ref} aria-hidden="true" className="relative z-10 w-full py-10 md:py-20 select-none overflow-x-clip">
       <div className="-rotate-2 scale-[1.04] border-y border-white/[0.06] bg-[#05030a]/60 py-5 md:py-7">
         <VelocityMarquee
           items={words}

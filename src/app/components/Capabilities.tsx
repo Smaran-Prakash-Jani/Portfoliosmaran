@@ -122,7 +122,7 @@ export function Capabilities() {
     {
       id: '04',
       title: 'Startup Execution',
-      description: 'Moving with founders velocity. Translating ambiguous ideas into shipping products with zero friction and uncompromised quality.',
+      description: "Moving with a founder's urgency. Translating ambiguous ideas into shipping products with zero friction and uncompromised quality.",
       tools: ['Agile', 'Product Strategy', 'Growth Hacking', 'GTM']
     }
   ];

@@ -73,7 +73,7 @@ export function About() {
                 <ScrollRevealText text="I am a Computer Science student hyper-focused on Artificial Intelligence and Machine Learning. Yet, the backend is only the foundation." />
               </p>
               <p>
-                <ScrollRevealText text="My true obsession lies in the final layer—translating complex systems into world-class, premium product designs. It is the tasteful restraint, the micro-interactions, and the typography that define elite software." />
+                <ScrollRevealText text="My true obsession lies in the final layer—translating complex systems into world-class, premium product designs. It is the tasteful restraint, the micro-interactions, and the typography that define great software." />
               </p>
               <p>
                 <ScrollRevealText text="Whether deploying neural networks or engineering a high-fidelity frontend, my objective is singular: absolute precision and uncompromised aesthetic authority." />

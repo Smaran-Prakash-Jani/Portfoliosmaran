@@ -108,7 +108,7 @@ export function Footer() {
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
             <p className="max-w-2xl text-lg md:text-2xl text-white/80 font-light tracking-wide leading-relaxed text-center md:text-left">
-              <ScrollRevealText text="Seeking opportunities to architect intelligence and craft premium digital experiences. Available for elite engagements." />
+              <ScrollRevealText text="Seeking opportunities to architect intelligence and craft premium digital experiences. Open to new projects and roles." />
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">

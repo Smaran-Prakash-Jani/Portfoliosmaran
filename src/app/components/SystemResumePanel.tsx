@@ -5,6 +5,45 @@ import sphereVideo from "../../imports/37a7390a12291015429da39931bf1e58.mp4";
 // the metal ID card (WebGL 2) is only fetched when the resume opens
 const IdCard = lazy(() => import('./ResumeIdCard'));
 
+type TimelineItem = { year: string; role: string; corp: string; desc?: string };
+
+const experience: TimelineItem[] = [
+  { year: "2026—PRES", role: "Full-Stack Developer", corp: "CRM TECHNOLOGY · FREELANCE", desc: "Designed and built the company's own commerce platform to replace their Shopify store: storefront, dealer portal, quotes and PDF invoices, PC builder and a 2FA-secured admin. Live in production." },
+  { year: "2025—26", role: "Cyber Security Intern", corp: "CODEALPHA", desc: "Built a Python password-strength checker and a socket-based port scanner, and wrote a security-awareness report on phishing and malware." },
+  { year: "2025", role: "Campus Ambassador", corp: "GOOGLE · STUDENT AMBASSADOR PROGRAM", desc: "Worked with a community of students on campus initiatives around technology, AI and leadership." },
+  { year: "2025", role: "Campus Ambassador", corp: "TECHFEST · IIT BOMBAY", desc: "Represented Techfest, IIT Bombay's annual science and technology festival, at my college." },
+  { year: "2025", role: "Indigo Squad Member", corp: "MOOD INDIGO · IIT BOMBAY", desc: "Part of the student squad for Mood Indigo, IIT Bombay's annual cultural festival." },
+];
+
+const education: TimelineItem[] = [
+  { year: "2025—29", role: "BTech, Computer Science", corp: "NIAT (NXTWAVE INSTITUTE OF ADVANCED TECHNOLOGIES) · DEGREE BY S-VYASA" },
+  { year: "2023—25", role: "High School", corp: "DELHI PUBLIC SCHOOL" },
+];
+
+function Timeline({ items }: { items: TimelineItem[] }) {
+  return (
+    <div className="flex flex-col gap-8 border-l border-white/5 pl-4">
+      {items.map((item, idx) => (
+        <div key={idx} className="group relative flex flex-col gap-2">
+          <div className="absolute -left-[21px] top-1.5 w-[9px] h-[1px] bg-white/20 group-hover:bg-[#8B5CF6] transition-colors" />
+          <div className="absolute -left-[21px] top-1 w-1 h-1 bg-white/40 group-hover:bg-[#8B5CF6] transition-colors rounded-full shadow-[0_0_8px_rgba(139,92,246,0)] group-hover:shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+
+          <div className="flex items-center justify-between gap-4">
+            <span className="font-mono text-[11px] md:text-base text-white uppercase tracking-widest">{item.role}</span>
+            <span className="font-mono text-[9px] text-white/40 tracking-widest shrink-0">{item.year}</span>
+          </div>
+          <span className="font-mono text-[10px] md:text-sm text-[#A78BFA] uppercase tracking-wider">{item.corp}</span>
+          {item.desc && (
+            <p className="font-mono text-[10px] md:text-sm text-white/55 mt-1 md:mt-2 leading-relaxed">
+              {item.desc}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 interface SystemResumePanelProps {
   isOpen: boolean;
   onClose: () => void;
@@ -200,7 +239,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                         Smaran Prakash Jani
                       </h1>
                       <h2 className="mt-2 md:mt-4 text-base md:text-2xl tracking-[0.3em] text-[#A78BFA] uppercase">
-                        Founder / Technologist
+                        CS Student / Developer
                       </h2>
                       <p className="mt-4 md:mt-8 max-w-4xl text-sm md:text-lg text-white/60 font-mono leading-relaxed uppercase relative group">
                         <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#8B5CF6]">_</span>
@@ -223,7 +262,8 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                   {/* Grid Layout */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
                     
-                    {/* Left Column: Experience */}
+                    {/* Left Column: Experience & Education */}
+                    <div className="flex flex-col gap-12">
                     <motion.div 
                       initial={{ x: -10, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
@@ -236,27 +276,24 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                         <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Experience Node</h3>
                       </div>
                       
-                      <div className="flex flex-col gap-8 border-l border-white/5 pl-4">
-                        {[
-                          { year: "2026—PRES", role: "Full-Stack Developer", corp: "CRM TECHNOLOGY · FREELANCE", desc: "Designed and built the company's own commerce platform to replace their Shopify store: storefront, dealer portal, quotes and PDF invoices, PC builder and a 2FA-secured admin. Live in production." },
-                          { year: "2025", role: "Cyber Security Intern", corp: "CODEALPHA", desc: "Built a Python password-strength checker and a socket-based port scanner, and wrote a security-awareness report on phishing and malware." }
-                        ].map((item, idx) => (
-                          <div key={idx} className="group relative flex flex-col gap-2">
-                            <div className="absolute -left-[21px] top-1.5 w-[9px] h-[1px] bg-white/20 group-hover:bg-[#8B5CF6] transition-colors" />
-                            <div className="absolute -left-[21px] top-1 w-1 h-1 bg-white/40 group-hover:bg-[#8B5CF6] transition-colors rounded-full shadow-[0_0_8px_rgba(139,92,246,0)] group-hover:shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
-                            
-                            <div className="flex items-center justify-between">
-                              <span className="font-mono text-[11px] md:text-base text-white uppercase tracking-widest">{item.role}</span>
-                              <span className="font-mono text-[9px] text-white/40 tracking-widest">{item.year}</span>
-                            </div>
-                            <span className="font-mono text-[10px] md:text-sm text-[#A78BFA] uppercase tracking-wider">{item.corp}</span>
-                            <p className="font-mono text-[10px] md:text-sm text-white/55 mt-1 md:mt-2 leading-relaxed">
-                              {item.desc}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
+                      <Timeline items={experience} />
                     </motion.div>
+
+                    {/* Education */}
+                    <motion.div 
+                      initial={{ x: -10, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 1.15, duration: 0.2, ease: "linear" }}
+                      className="flex flex-col gap-8"
+                    >
+                      <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
+                        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite_0.25s]" />
+                        <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">02 //</span>
+                        <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Education Node</h3>
+                      </div>
+                      <Timeline items={education} />
+                    </motion.div>
+                    </div>
 
                     {/* Right Column: Skills & Projects */}
                     <div className="flex flex-col gap-12">
@@ -270,7 +307,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       >
                         <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
                            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite_0.5s]" />
-                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">02 //</span>
+                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">03 //</span>
                           <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Skills Module</h3>
                         </div>
                         
@@ -295,7 +332,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       >
                         <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
                           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite_1s]" />
-                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">03 //</span>
+                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">04 //</span>
                           <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Projects Matrix</h3>
                         </div>
                         
@@ -331,7 +368,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     </div>
                   </div>
 
-                  {/* 04: Identity record — the ID card beside the contact details */}
+                  {/* 05: Identity record — the ID card beside the contact details */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -347,14 +384,14 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     </div>
                     <div className="flex flex-col gap-8">
                       <div className="flex items-center gap-4 border-b border-white/10 pb-4">
-                        <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">04 //</span>
+                        <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">05 //</span>
                         <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Identity Record</h3>
                       </div>
                       <dl className="grid grid-cols-[auto_1fr] gap-x-8 md:gap-x-12 gap-y-5 font-mono text-[10px] md:text-sm uppercase tracking-[0.2em]">
                         <dt className="text-white/40">Name</dt>
                         <dd className="text-white">Smaran Prakash Jani</dd>
                         <dt className="text-white/40">Role</dt>
-                        <dd className="text-white/80">Founder / Technologist</dd>
+                        <dd className="text-white/80">CS Student / Developer</dd>
                         <dt className="text-white/40">Status</dt>
                         <dd className="text-[#A78BFA]">Available</dd>
                         <dt className="text-white/40">Contact</dt>
