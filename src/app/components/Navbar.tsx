@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSiteReady } from '../lib/boot';
 import { AnimatePresence, motion, useAnimationControls } from 'motion/react';
 import { FileText } from 'lucide-react';
 import { scrollToTarget } from '../lib/smoothScroll';
@@ -41,6 +42,9 @@ export function Navbar() {
   const railRef = useRef<HTMLDivElement>(null);
   const blades = useAnimationControls();
 
+  // the page's sections are built behind the loading screen, after the navbar: (re)attach once
+  // the site is ready so every section is found
+  const ready = useSiteReady();
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -56,8 +60,8 @@ export function Navbar() {
     const sections = document.querySelectorAll('section, footer');
     sections.forEach((section) => observer.observe(section));
 
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
+    return () => observer.disconnect();
+  }, [ready]);
 
   // The Process interlude belongs to About (01.B)
   const activeIdx = navLinks.findIndex((l) => l.sectionId === (activeSection === 'process' ? 'about' : activeSection));

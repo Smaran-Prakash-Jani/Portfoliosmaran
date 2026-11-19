@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import sphereVideo from "../../imports/37a7390a12291015429da39931bf1e58.mp4";
 
@@ -11,15 +11,32 @@ interface SystemResumePanelProps {
 }
 
 export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
-  // the card mounts as the header appears, so its light sweep is seen
+  // the ID card mounts when its section scrolls into view, so its light sweep is seen
+  const cardSlot = useRef<HTMLDivElement>(null);
   const [showCard, setShowCard] = useState(false);
   useEffect(() => {
     if (!isOpen) {
       setShowCard(false);
       return;
     }
-    const t = window.setTimeout(() => setShowCard(true), 950);
-    return () => window.clearTimeout(t);
+    let io: IntersectionObserver | null = null;
+    const t = window.setTimeout(() => {
+      const el = cardSlot.current;
+      if (!el) return;
+      io = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          setShowCard(true);
+          io?.disconnect();
+        },
+        { threshold: 0.3 }
+      );
+      io.observe(el);
+    }, 300);
+    return () => {
+      window.clearTimeout(t);
+      io?.disconnect();
+    };
   }, [isOpen]);
   // Lock body scroll when open
   useEffect(() => {
@@ -191,24 +208,15 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       </p>
                     </div>
                     
-                    {/* the animated sphere, fully in view, with the ID card overlapping it */}
-                    <div className="relative shrink-0 self-center md:self-auto flex flex-col sm:flex-row items-center">
+                    <div className="relative w-40 h-40 md:w-64 md:h-64 xl:w-80 xl:h-80 shrink-0 self-center md:self-auto overflow-hidden pointer-events-none opacity-60">
                       <video
                         src={sphereVideo}
                         autoPlay
                         loop
                         muted
                         playsInline
-                        aria-hidden="true"
-                        className="pointer-events-none relative z-0 -mb-16 w-44 h-44 sm:mb-0 sm:-mr-14 sm:w-52 sm:h-52 md:-mr-16 md:w-64 md:h-64 xl:w-72 xl:h-72 object-contain mix-blend-screen opacity-90"
+                        className="w-full h-full object-contain mix-blend-screen"
                       />
-                      <div className="relative z-10 w-[min(280px,72vw)] md:w-[300px] aspect-[300/460]">
-                        {showCard && (
-                          <Suspense fallback={null}>
-                            <IdCard />
-                          </Suspense>
-                        )}
-                      </div>
                     </div>
                   </motion.div>
 
@@ -322,6 +330,44 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
 
                     </div>
                   </div>
+
+                  {/* 04: Identity record — the ID card beside the contact details */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3, duration: 0.4, ease: 'easeOut' }}
+                    className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-20 items-center"
+                  >
+                    <div ref={cardSlot} className="mx-auto md:mx-0 w-[min(280px,72vw)] md:w-[300px] aspect-[300/460]">
+                      {showCard && (
+                        <Suspense fallback={null}>
+                          <IdCard />
+                        </Suspense>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-8">
+                      <div className="flex items-center gap-4 border-b border-white/10 pb-4">
+                        <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">04 //</span>
+                        <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Identity Record</h3>
+                      </div>
+                      <dl className="grid grid-cols-[auto_1fr] gap-x-8 md:gap-x-12 gap-y-5 font-mono text-[10px] md:text-sm uppercase tracking-[0.2em]">
+                        <dt className="text-white/40">Name</dt>
+                        <dd className="text-white">Smaran Prakash Jani</dd>
+                        <dt className="text-white/40">Role</dt>
+                        <dd className="text-white/80">Founder / Technologist</dd>
+                        <dt className="text-white/40">Status</dt>
+                        <dd className="text-[#A78BFA]">Available</dd>
+                        <dt className="text-white/40">Contact</dt>
+                        <dd className="normal-case tracking-[0.08em]">
+                          <a href="mailto:smaranprakash@gmail.com" className="text-white/80 hover:text-white transition-colors break-all">smaranprakash@gmail.com</a>
+                        </dd>
+                        <dt className="text-white/40">Code</dt>
+                        <dd className="normal-case tracking-[0.08em]">
+                          <a href="https://github.com/Smaran-Prakash-Jani" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors break-all">github.com/Smaran-Prakash-Jani</a>
+                        </dd>
+                      </dl>
+                    </div>
+                  </motion.div>
 
                   {/* Footer / Contact Protocol */}
                   <motion.div 
