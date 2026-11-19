@@ -75,14 +75,19 @@ export function Projects() {
     visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } },
   };
 
-  // Earlier work. The links are private for now.
-  const projects = [
+  // Featured work. Neural Synthesizer is live; the other links are private for now.
+  type Featured = { id: string; title: string; category: string; image: string; description: string; links?: { label: string; href: string }[] };
+  const projects: Featured[] = [
     {
       id: '01',
       title: 'Neural Synthesizer',
       category: 'AI / Product',
       image: 'https://images.unsplash.com/photo-1771503735122-22405ba958f9?crop=entropy&cs=tinysrgb&fit=max&auto=format&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwZ2xvd2luZ3xlbnwxfHx8fDE3NzczMzE4NTN8MA&ixlib=rb-4.1.0&q=70&w=1080',
-      description: 'An advanced AI agent framework translating natural language into high-fidelity UI components. Built with React and LangChain.',
+      description: 'Describe an interface in plain English and watch it build. Claude, GPT, Gemini or Grok writes a live React + Tailwind component, with your own key.',
+      links: [
+        { label: 'Live app', href: 'https://neural-synthesizer.vercel.app' },
+        { label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/neural-synthesizer' },
+      ],
     },
     {
       id: '02',
@@ -202,7 +207,7 @@ export function Projects() {
                 then tilts towards the mouse */}
             <TiltMedia className="relative" >
             <WipeReveal
-              data-cursor-label="Private"
+              data-cursor-label={project.links ? 'Live' : 'Private'}
               className="relative aspect-[4/5] overflow-hidden bg-white/[0.01] border border-white/[0.02]"
             >
               {/* Corner Accents */}
@@ -244,11 +249,29 @@ export function Projects() {
                 </p>
               </div>
 
-              {/* Private link notice */}
-              <div className="flex items-center gap-2 pt-4 mt-2 border-t border-white/[0.04] font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
-                <Lock className="w-3 h-3 shrink-0" />
-                Link made private for a while
-              </div>
+              {/* Links, or the private-link notice */}
+              {project.links ? (
+                <div className="flex flex-wrap items-center gap-6 pt-4 mt-2 border-t border-white/[0.04]">
+                  {project.links.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/link relative inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                      <ArrowUpRight className="w-3 h-3 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                      <span className="absolute -bottom-1 left-0 w-full h-px bg-[#8B5CF6] scale-x-0 group-hover/link:scale-x-100 transition-transform origin-left" />
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 pt-4 mt-2 border-t border-white/[0.04] font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+                  <Lock className="w-3 h-3 shrink-0" />
+                  Link made private for a while
+                </div>
+              )}
             </div>
           </motion.div>
         ))}
