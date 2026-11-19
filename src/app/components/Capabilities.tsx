@@ -1,6 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { Suspense, lazy, useState, useRef } from 'react';
+import { canvasDpr } from '../lib/quality';
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { BlurText, ScrambleText } from './fx/TextFx';
+import { GhostNumeral } from './fx/ScrollFx';
+// WebGL2 orb: loaded when the section is reached, not in the first download
+const Strands = lazy(() => import('./reactbits/Strands'));
 
 function CapabilityCard({ item, index, isHovered, onHover, onLeave }: any) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +31,7 @@ function CapabilityCard({ item, index, isHovered, onHover, onLeave }: any) {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
+      data-fx-group
       className="group relative border-b border-white/[0.04] py-10 md:py-16 lg:py-24 flex flex-col lg:flex-row lg:items-start justify-between gap-6 md:gap-12 cursor-pointer transition-colors duration-700 hover:border-[#8B5CF6]/30 overflow-hidden bg-transparent"
     >
       {/* Dynamic Hover Glow */}
@@ -49,7 +55,7 @@ function CapabilityCard({ item, index, isHovered, onHover, onLeave }: any) {
           (0{index + 1})
         </span>
         <h4 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white/40 group-hover:text-white transition-colors duration-700 tracking-tighter leading-none">
-          {item.title}
+          <ScrambleText text={item.title} playOn="hover" />
         </h4>
       </div>
 
@@ -124,35 +130,43 @@ export function Capabilities() {
 
   return (
     <section id="capabilities" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 py-16 md:py-40 z-10">
+      <GhostNumeral className="right-[7%] top-[2%]">03</GhostNumeral>
       <div className="flex flex-col gap-8 mb-10 md:mb-32 relative w-full">
         <div className="flex items-center gap-6 mb-4 w-full">
           <div className="flex flex-col gap-1">
-            <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
+            <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/60 font-medium relative flex items-center gap-3">
               <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />
-              03 // Capabilities
+              <ScrambleText text="03 // Capabilities" />
             </h2>
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 pl-4">SEC.03_SYS</span>
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/45 pl-4">SEC.03_SYS</span>
           </div>
 
-          <div className="flex-1 h-[1px] bg-white/[0.05] relative mx-4">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/20 rounded-full" />
-            <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/20" />
-            <div className="absolute left-[45%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/20" />
-            <div className="absolute left-[85%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/20" />
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/20" />
-          </div>
+          <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 1.6, ease: [0.76, 0, 0.24, 1] }} className="flex-1 h-[1px] bg-white/[0.12] relative mx-4 origin-left">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/45 rounded-full" />
+            <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/45" />
+            <div className="absolute left-[45%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/45" />
+            <div className="absolute left-[85%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/45" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/45" />
+          </motion.div>
 
-          <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 hidden md:block">SYS.CAP_03</span>
+          <span className="font-mono text-[8px] tracking-[0.2em] text-white/45 hidden md:block">SYS.CAP_03</span>
         </div>
         <h3 className="text-5xl md:text-7xl lg:text-9xl font-medium tracking-tighter text-white leading-[0.9]">
-          Capabilities.
+          <BlurText text="Capabilities." split="chars" stagger={0.035} />
         </h3>
         
-        {/* Decorative Grid Top Right */}
-        <div className="absolute right-0 top-0 w-32 h-32 opacity-20 hidden md:grid grid-cols-4 grid-rows-4 gap-1 pointer-events-none">
-          {[...Array(16)].map((_, i) => (
-            <div key={i} className="bg-white/10 rounded-sm hover:bg-[#8B5CF6]/40 transition-colors duration-1000" />
-          ))}
+        {/* An AI orb: light that turns, listens and leans towards the cursor */}
+        <div className="absolute right-0 lg:right-8 -top-10 w-[220px] h-[220px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] hidden sm:block" data-cursor-label="Tap it">
+          <Suspense fallback={null}>
+            <Strands
+              colors={['#c084fc', '#a855f7', '#e9d5ff', '#fdf4ff', '#a5b4fc', '#6366f1', '#312e81']}
+              energy={0.62}
+              glassSize={1.05}
+              intensity={1.05}
+              listening
+              maxDevicePixelRatio={canvasDpr(2)}
+            />
+          </Suspense>
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 
 export function GhostUI() {
   const [time, setTime] = useState("00:00:00");
-  const [ms, setMs] = useState("000");
+  const msRef = React.useRef<HTMLSpanElement>(null);
 
   const { scrollY } = useScroll();
   // Transform scroll position into a pseudo-coordinate
@@ -23,7 +23,7 @@ export function GhostUI() {
     // Fast interval for purely visual 'millisecond' technical effect
     // We decouple this from actual Date to prevent actual time lag feeling
     const msTimer = setInterval(() => {
-      setMs(String(Math.floor(Math.random() * 999)).padStart(3, '0'));
+      if (msRef.current) msRef.current.textContent = String(Math.floor(Math.random() * 999)).padStart(3, '0');
     }, 50);
 
     // Initial set
@@ -54,13 +54,13 @@ export function GhostUI() {
       />
       
       {/* Vertical Tech Lines */}
-      <div className="hidden md:block absolute top-0 bottom-0 left-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
-      <div className="hidden md:block absolute top-0 bottom-0 right-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
+      <div className="hidden md:block absolute top-0 bottom-0 left-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.16] to-transparent" />
+      <div className="hidden md:block absolute top-0 bottom-0 right-[3%] w-[1px] bg-gradient-to-b from-transparent via-white/[0.16] to-transparent" />
 
       {/* Calibration Crosshairs & Circles - Top Left */}
       <motion.div 
         className="absolute top-4 left-4 md:top-8 md:left-8 flex flex-col gap-3 opacity-100 scale-[0.7] md:scale-100 origin-top-left"
-        animate={{ opacity: [0.6, 1, 0.6] }}
+        animate={{ opacity: [0.85, 1, 0.85] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
         <div className="w-12 h-12 border-[1px] border-white/50 rounded-full flex items-center justify-center relative">
@@ -88,22 +88,22 @@ export function GhostUI() {
           <span className="text-[11px] font-mono text-white/90 tracking-wider">
             {time}
           </span>
-          <span className="hidden md:inline text-[9px] font-mono text-white/60 w-6 text-right">
-            {ms}
+          <span ref={msRef} className="hidden md:inline text-[9px] font-mono text-white/60 w-6 text-right">
+            000
           </span>
         </div>
         <div className="flex gap-1 mt-1">
           {[...Array(5)].map((_, i) => (
             <motion.div 
               key={i} 
-              animate={{ opacity: [0.6, 1, 0.6] }}
+              animate={{ opacity: [0.85, 1, 0.85] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
               className={`w-3 h-[2px] ${i < 3 ? 'bg-white/90' : 'bg-white/40'}`} 
             />
           ))}
         </div>
         <motion.span 
-          animate={{ opacity: [0.5, 1, 0.5] }}
+          animate={{ opacity: [0.8, 1, 0.8] }}
           transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
           className="text-[9px] font-mono text-white/70 tracking-[0.2em] mt-2 uppercase"
         >
@@ -114,13 +114,13 @@ export function GhostUI() {
       {/* Frame Corners - Bottom Left */}
       <motion.div 
         className="absolute bottom-3 left-3 md:bottom-8 md:left-8 flex flex-col gap-2"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        animate={{ opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-5 h-5 md:w-12 md:h-12 border-l-[1px] border-b-[1px] border-white/[0.35]" />
-        <div className="hidden md:flex gap-2 text-[10px] font-mono text-white/25 tracking-widest">
+        <div className="w-5 h-5 md:w-12 md:h-12 border-l-[1px] border-b-[1px] border-white/[0.65]" />
+        <div className="hidden md:flex gap-2 text-[10px] font-mono text-white/60 tracking-widest">
           <span>X: -14.2</span>
-          <span className="text-white/10">//</span>
+          <span className="text-white/35">//</span>
           <div className="flex gap-1">
             <span>Y:</span>
             <motion.span>{yDisplay}</motion.span>
@@ -131,24 +131,24 @@ export function GhostUI() {
       {/* Frame Corners - Bottom Right */}
       <motion.div 
         className="absolute bottom-3 right-3 md:bottom-8 md:right-8 flex flex-col items-end gap-2"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        animate={{ opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
       >
-        <div className="w-5 h-5 md:w-12 md:h-12 border-r-[1px] border-b-[1px] border-white/[0.35]" />
-        <span className="hidden md:inline text-[10px] font-mono text-white/25 tracking-widest uppercase mt-[-24px] mr-3">
+        <div className="w-5 h-5 md:w-12 md:h-12 border-r-[1px] border-b-[1px] border-white/[0.65]" />
+        <span className="hidden md:inline text-[10px] font-mono text-white/60 tracking-widest uppercase mt-[-24px] mr-3">
           PWR. 100%
         </span>
       </motion.div>
 
       {/* Screen Edge Ticks */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 hidden md:flex flex-col gap-8 opacity-40">
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 hidden md:flex flex-col gap-8 opacity-75">
         {[...Array(10)].map((_, i) => (
           <div key={i} className="w-2 h-[1px] bg-white/40" />
         ))}
       </div>
 
       {/* Center Reticle (Ultra faint) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.04] flex items-center justify-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.1] flex items-center justify-center">
         <div className="absolute w-40 h-40 border-[1px] border-white rounded-full" />
         <div className="absolute w-52 h-[1px] bg-white" />
         <div className="absolute w-[1px] h-52 bg-white" />

@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import sphereVideo from "../../imports/37a7390a12291015429da39931bf1e58.mp4";
+
+// the metal ID card (WebGL 2) is only fetched when the resume opens
+const IdCard = lazy(() => import('./ResumeIdCard'));
 
 interface SystemResumePanelProps {
   isOpen: boolean;
@@ -8,6 +11,16 @@ interface SystemResumePanelProps {
 }
 
 export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
+  // the card mounts as the header appears, so its light sweep is seen
+  const [showCard, setShowCard] = useState(false);
+  useEffect(() => {
+    if (!isOpen) {
+      setShowCard(false);
+      return;
+    }
+    const t = window.setTimeout(() => setShowCard(true), 950);
+    return () => window.clearTimeout(t);
+  }, [isOpen]);
   // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +46,7 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          data-lenis-prevent
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
@@ -43,11 +57,11 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-[#030303]/90 backdrop-blur-md"
+            className="absolute inset-0 bg-[#030303]"
           />
 
-          {/* 2. Panel Formation Container */}
-          <div className="relative w-[90vw] max-w-5xl h-[85vh] flex flex-col z-20">
+          {/* 2. Panel Formation Container: the full page */}
+          <div className="relative w-full h-full flex flex-col z-20">
             
             {/* -- Frame Building Borders -- */}
             {/* Center horizontal line (expands left/right) */}
@@ -154,8 +168,8 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
               </motion.div>
 
               {/* Scrollable Content */}
-              <div className="flex-1 overflow-y-auto px-6 py-8 md:p-12 custom-scrollbar">
-                <div className="max-w-4xl mx-auto flex flex-col gap-16">
+              <div className="flex-1 overflow-y-auto px-6 py-10 md:px-16 md:py-16 xl:px-24 custom-scrollbar">
+                <div className="w-full max-w-[110rem] mx-auto flex flex-col gap-20 md:gap-28">
                   
                   {/* Profile Header */}
                   <motion.div 
@@ -165,32 +179,41 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
                   >
                     <div className="flex flex-col gap-2 flex-1">
-                      <h1 className="text-3xl md:text-5xl font-light tracking-[0.1em] text-white uppercase">
+                      <h1 className="text-4xl md:text-7xl xl:text-8xl font-light tracking-[0.08em] text-white uppercase leading-none">
                         Smaran Prakash Jani
                       </h1>
-                      <h2 className="text-sm md:text-base tracking-[0.3em] text-[#8B5CF6] uppercase">
+                      <h2 className="mt-2 md:mt-4 text-base md:text-2xl tracking-[0.3em] text-[#A78BFA] uppercase">
                         Founder / Technologist
                       </h2>
-                      <p className="mt-4 max-w-2xl text-xs md:text-sm text-white/50 font-mono leading-relaxed uppercase relative group">
+                      <p className="mt-4 md:mt-8 max-w-4xl text-sm md:text-lg text-white/60 font-mono leading-relaxed uppercase relative group">
                         <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#8B5CF6]">_</span>
                         &gt; Specialized in crafting high-end digital experiences, merging visionary design with robust engineering architectures.
                       </p>
                     </div>
                     
-                    <div className="relative w-40 h-40 shrink-0 self-center md:self-auto overflow-hidden pointer-events-none opacity-50">
-                      <video 
-                        src={sphereVideo} 
-                        autoPlay 
-                        loop 
-                        muted 
+                    {/* the animated sphere, fully in view, with the ID card overlapping it */}
+                    <div className="relative shrink-0 self-center md:self-auto flex flex-col sm:flex-row items-center">
+                      <video
+                        src={sphereVideo}
+                        autoPlay
+                        loop
+                        muted
                         playsInline
-                        className="w-full h-full object-contain mix-blend-screen" 
+                        aria-hidden="true"
+                        className="pointer-events-none relative z-0 -mb-16 w-44 h-44 sm:mb-0 sm:-mr-14 sm:w-52 sm:h-52 md:-mr-16 md:w-64 md:h-64 xl:w-72 xl:h-72 object-contain mix-blend-screen opacity-90"
                       />
+                      <div className="relative z-10 w-[min(280px,72vw)] md:w-[300px] aspect-[300/460]">
+                        {showCard && (
+                          <Suspense fallback={null}>
+                            <IdCard />
+                          </Suspense>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
 
                   {/* Grid Layout */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
                     
                     {/* Left Column: Experience */}
                     <motion.div 
@@ -201,8 +224,8 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                     >
                       <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
                         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite]" />
-                        <span className="font-mono text-[10px] text-white/30 tracking-[0.2em]">01 //</span>
-                        <h3 className="text-[12px] uppercase tracking-[0.3em] text-white/80">Experience Node</h3>
+                        <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">01 //</span>
+                        <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Experience Node</h3>
                       </div>
                       
                       <div className="flex flex-col gap-8 border-l border-white/5 pl-4">
@@ -215,11 +238,11 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                             <div className="absolute -left-[21px] top-1 w-1 h-1 bg-white/40 group-hover:bg-[#8B5CF6] transition-colors rounded-full shadow-[0_0_8px_rgba(139,92,246,0)] group-hover:shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
                             
                             <div className="flex items-center justify-between">
-                              <span className="font-mono text-[11px] text-white uppercase tracking-widest">{item.role}</span>
+                              <span className="font-mono text-[11px] md:text-base text-white uppercase tracking-widest">{item.role}</span>
                               <span className="font-mono text-[9px] text-white/40 tracking-widest">{item.year}</span>
                             </div>
-                            <span className="font-mono text-[10px] text-[#8B5CF6] uppercase tracking-wider">{item.corp}</span>
-                            <p className="font-mono text-[10px] text-white/40 mt-1 leading-relaxed">
+                            <span className="font-mono text-[10px] md:text-sm text-[#A78BFA] uppercase tracking-wider">{item.corp}</span>
+                            <p className="font-mono text-[10px] md:text-sm text-white/55 mt-1 md:mt-2 leading-relaxed">
                               {item.desc}
                             </p>
                           </div>
@@ -239,15 +262,15 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       >
                         <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
                            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite_0.5s]" />
-                          <span className="font-mono text-[10px] text-white/30 tracking-[0.2em]">02 //</span>
-                          <h3 className="text-[12px] uppercase tracking-[0.3em] text-white/80">Skills Module</h3>
+                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">02 //</span>
+                          <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Skills Module</h3>
                         </div>
                         
                         <div className="flex flex-wrap gap-3">
                           {["TypeScript", "React", "Next.js", "Tailwind CSS", "Framer Motion", "PostgreSQL", "Python", "FastAPI", "Rust", "LLM Integration", "UI/UX Design"].map((skill, idx) => (
                             <div 
                               key={idx}
-                              className="px-3 py-1.5 border border-white/10 text-white/60 hover:text-white hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/5 transition-all font-mono text-[10px] uppercase tracking-widest cursor-default hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]"
+                              className="px-3 py-1.5 md:px-5 md:py-2.5 border border-white/10 text-white/60 hover:text-white hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/5 transition-all font-mono text-[10px] md:text-sm uppercase tracking-widest cursor-default hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]"
                             >
                               {skill}
                             </div>
@@ -264,8 +287,8 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                       >
                         <div className="flex items-center gap-4 border-b border-white/10 pb-4 relative overflow-hidden">
                           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#8B5CF6]/50 to-transparent scale-x-0 animate-[scan_2s_ease-out_infinite_1s]" />
-                          <span className="font-mono text-[10px] text-white/30 tracking-[0.2em]">03 //</span>
-                          <h3 className="text-[12px] uppercase tracking-[0.3em] text-white/80">Projects Matrix</h3>
+                          <span className="font-mono text-[10px] md:text-xs text-white/40 tracking-[0.2em]">03 //</span>
+                          <h3 className="text-[12px] md:text-lg uppercase tracking-[0.3em] text-white/85">Projects Matrix</h3>
                         </div>
                         
                         <div className="flex flex-col gap-4">
@@ -285,12 +308,12 @@ export function SystemResumePanel({ isOpen, onClose }: SystemResumePanelProps) {
                               >
                                 <div className="absolute top-0 left-0 w-1 h-full bg-white/10 group-hover:bg-[#8B5CF6] transition-colors" />
                                 <div className="flex items-center justify-between pl-2">
-                                  <span className="font-mono text-[11px] text-white tracking-widest group-hover:text-[#8B5CF6] transition-colors">{proj.name}</span>
+                                  <span className="font-mono text-[11px] md:text-base text-white tracking-widest group-hover:text-[#A78BFA] transition-colors">{proj.name}</span>
                                   <span className={`font-mono text-[9px] tracking-widest ${proj.status === 'ONLINE' ? 'text-[#8B5CF6] animate-pulse' : 'text-white/30'}`}>
                                     [{proj.status}]
                                   </span>
                                 </div>
-                                <p className="font-mono text-[10px] text-white/40 pl-2">{proj.desc}</p>
+                                <p className="font-mono text-[10px] md:text-sm text-white/55 pl-2 leading-relaxed">{proj.desc}</p>
                               </Card>
                             );
                           })}

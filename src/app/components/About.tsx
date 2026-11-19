@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { BlurText, ScrambleText } from './fx/TextFx';
+import { GhostNumeral, ScrollRevealText } from './fx/ScrollFx';
 
 export function About() {
   const containerVariants = {
@@ -23,7 +25,8 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 pt-24 md:pt-48 pb-16 md:pb-40 z-10">
+    <section id="about" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 pt-16 md:pt-28 pb-16 md:pb-40 z-10">
+      <GhostNumeral className="right-[6%] top-[6%]">01</GhostNumeral>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -34,21 +37,21 @@ export function About() {
         <div>
           <motion.div variants={childVariants} className="flex items-center gap-6 mb-10 md:mb-16 w-full">
             <div className="flex flex-col gap-1">
-              <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium relative flex items-center gap-3">
+              <h2 className="text-[10px] uppercase tracking-[0.3em] text-white/60 font-medium relative flex items-center gap-3">
                 <span className="w-1 h-1 border-[1px] border-[#8B5CF6]/60 rounded-full" />
-                01 // The Premise
+                <ScrambleText text="01 // The Premise" />
               </h2>
-              <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 pl-4">SEC.01_INIT</span>
+              <span className="font-mono text-[8px] tracking-[0.2em] text-white/45 pl-4">SEC.01_INIT</span>
             </div>
             
-            <div className="flex-1 h-[1px] bg-white/[0.05] relative mx-4">
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/20 rounded-full" />
-              <div className="absolute left-[30%] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/20" />
-              <div className="absolute left-[60%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/20" />
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/20" />
-            </div>
+            <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 1.6, ease: [0.76, 0, 0.24, 1] }} className="flex-1 h-[1px] bg-white/[0.12] relative mx-4 origin-left">
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-white/45 rounded-full" />
+              <div className="absolute left-[30%] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/45" />
+              <div className="absolute left-[60%] top-1/2 -translate-y-1/2 w-[1px] h-2 bg-white/45" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-white/45" />
+            </motion.div>
             
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/20 hidden md:block">DATA.BLK_01</span>
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/45 hidden md:block">DATA.BLK_01</span>
           </motion.div>
           
           <div className="relative p-6 md:p-12 border border-white/[0.03] bg-black/20 backdrop-blur-sm group hover:border-white/[0.08] transition-colors duration-700">
@@ -61,22 +64,19 @@ export function About() {
             {/* Faint internal grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50" />
 
-            <motion.h3 
-              variants={childVariants} 
-              className="relative text-3xl md:text-5xl lg:text-6xl font-medium tracking-tighter text-white mb-12 leading-[1.1] z-10"
-            >
-              Refining the raw power of intelligence into cinematic, zero-friction experiences.
-            </motion.h3>
+            <h3 className="relative text-3xl md:text-5xl lg:text-6xl font-medium tracking-tighter text-white mb-12 leading-[1.1] z-10">
+              <BlurText text="Refining the raw power of intelligence into cinematic, zero-friction experiences." stagger={0.05} />
+            </h3>
             
-            <motion.div variants={childVariants} className="relative space-y-6 text-white/50 text-lg md:text-xl font-light leading-[1.7] max-w-2xl z-10">
+            <motion.div variants={childVariants} className="relative space-y-6 text-white/80 text-lg md:text-xl font-light leading-[1.7] max-w-2xl z-10">
               <p>
-                I am a Computer Science student hyper-focused on Artificial Intelligence and Machine Learning. Yet, the backend is only the foundation.
+                <ScrollRevealText text="I am a Computer Science student hyper-focused on Artificial Intelligence and Machine Learning. Yet, the backend is only the foundation." />
               </p>
               <p>
-                My true obsession lies in the final layer—translating complex systems into world-class, premium product designs. It is the tasteful restraint, the micro-interactions, and the typography that define elite software.
+                <ScrollRevealText text="My true obsession lies in the final layer—translating complex systems into world-class, premium product designs. It is the tasteful restraint, the micro-interactions, and the typography that define elite software." />
               </p>
               <p>
-                Whether deploying neural networks or engineering a high-fidelity frontend, my objective is singular: absolute precision and uncompromised aesthetic authority.
+                <ScrollRevealText text="Whether deploying neural networks or engineering a high-fidelity frontend, my objective is singular: absolute precision and uncompromised aesthetic authority." />
               </p>
             </motion.div>
           </div>
