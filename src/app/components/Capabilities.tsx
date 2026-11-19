@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useState, useRef } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { canvasDpr } from '../lib/quality';
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
@@ -156,7 +157,8 @@ export function Capabilities() {
         </h3>
         
         {/* An AI orb: light that turns, listens and leans towards the cursor */}
-        <div className="absolute right-0 lg:right-8 -top-10 w-[220px] h-[220px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] hidden sm:block" data-cursor-label="Tap it">
+        <div className="absolute right-0 xl:right-8 -top-10 w-[220px] h-[220px] min-[900px]:w-[300px] min-[900px]:h-[300px] lg:w-[240px] lg:h-[240px] xl:w-[360px] xl:h-[360px] hidden sm:block" data-cursor-label="Tap it">
+          <GLSlot>
           <Suspense fallback={null}>
             <Strands
               colors={['#c084fc', '#a855f7', '#e9d5ff', '#fdf4ff', '#a5b4fc', '#6366f1', '#312e81']}
@@ -167,6 +169,7 @@ export function Capabilities() {
               maxDevicePixelRatio={canvasDpr(2)}
             />
           </Suspense>
+          </GLSlot>
         </div>
       </div>
 

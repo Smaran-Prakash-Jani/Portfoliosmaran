@@ -1,10 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { motion } from 'motion/react';
 import { Mail, ArrowRight, FileText, Github, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { BlurText, ScrambleText } from './fx/TextFx';
 import { GhostNumeral, Magnetic, ScrollRevealText } from './fx/ScrollFx';
 import { ChromeTracker } from './fx/ChromeTracker';
-import { ChromeFollower } from './fx/ChromeFollower';
+import { ChromeFollower, chromeFollowerEnabled } from './fx/ChromeFollower';
+
+// The chrome tracker's box; its placeholder (see GLSlot) uses the same, so the layout never moves
+const CHROME_BOX =
+  'pointer-events-none relative block mx-auto -mt-6 mb-4 h-72 w-full max-w-md md:h-80 lg:absolute lg:mx-0 lg:mb-0 lg:mt-0 lg:right-[2%] lg:top-[2%] lg:h-[72%] lg:w-[50%] lg:max-w-none';
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/Smaran-Prakash-Jani', Icon: Github },
@@ -20,6 +25,8 @@ const openResume = (e: React.MouseEvent) => {
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
+  // touch screens get no follower, so it does not take a WebGL slot there
+  const [follower] = useState(chromeFollowerEnabled);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.2 } },
@@ -33,7 +40,11 @@ export function Footer() {
   return (
     <footer ref={footerRef} id="contact" className="relative w-full max-w-[90rem] mx-auto px-8 md:pl-12 md:pr-28 pt-16 pb-28 md:py-48 z-10 overflow-hidden">
       {/* one chrome blob breaks away and follows the cursor around this section */}
-      <ChromeFollower sectionRef={footerRef} />
+      {follower && (
+        <GLSlot>
+          <ChromeFollower sectionRef={footerRef} />
+        </GLSlot>
+      )}
       {/* Cinematic Ambient Glow */}
       <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none rounded-full" />
       <GhostNumeral className="left-[1%] top-[4%]">04</GhostNumeral>
@@ -87,7 +98,9 @@ export function Footer() {
           </div>
 
           {/* Liquid chrome under a computer-vision tracking pass */}
-          <ChromeTracker className="pointer-events-none relative block mx-auto -mt-6 mb-4 h-72 w-full max-w-md md:h-80 lg:absolute lg:mx-0 lg:mb-0 lg:mt-0 lg:right-[2%] lg:top-[2%] lg:h-[72%] lg:w-[50%] lg:max-w-none" />
+          <GLSlot fallback={<div aria-hidden="true" className={CHROME_BOX} />}>
+            <ChromeTracker className={CHROME_BOX} />
+          </GLSlot>
 
           <h3 className="relative z-10 text-6xl md:text-[8rem] lg:text-[10rem] font-medium tracking-tighter text-white mb-12 md:mb-20 leading-[0.8] select-none">
             <BlurText text={"Let's\nBuild."} stagger={0.14} duration={1.3} />

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { motion, useTransform, useMotionValue, useSpring, useMotionTemplate } from 'motion/react';
 import sphereVideo from "../../imports/37a7390a12291015429da39931bf1e58.mp4";
 import { WormholeTunnel } from './fx/WormholeTunnel';
@@ -92,11 +93,13 @@ export function Hero() {
 
         {/* Falling through a tunnel of light (WebGL); fades out at the end, revealing the star dust behind the page */}
         <motion.div className="absolute inset-0" style={{ opacity: canvasFade }}>
-          <WormholeTunnel
-            progress={scrollYProgress}
-            clearCentre
-            className="absolute inset-0 w-full h-full"
-          />
+          <GLSlot>
+            <WormholeTunnel
+              progress={scrollYProgress}
+              clearCentre
+              className="absolute inset-0 w-full h-full"
+            />
+          </GLSlot>
           {/* film grain and a lens vignette: a photographic finish over the light */}
           <div
             aria-hidden="true"

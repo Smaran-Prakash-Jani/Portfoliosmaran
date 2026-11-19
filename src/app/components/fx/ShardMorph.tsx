@@ -749,6 +749,8 @@ export default function ShardMorph({
       shard.dispose();
       composer.dispose();
       renderer.dispose();
+      // free the context now (see GLSlot)
+      renderer.forceContextLoss();
     };
   }, [sectionRef]);
 

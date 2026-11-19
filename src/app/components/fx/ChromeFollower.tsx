@@ -51,13 +51,14 @@ void main() {
 }
 `;
 
-const enabledFor = () =>
+/** Mouse pointers only (no follower on touch screens). */
+export const chromeFollowerEnabled = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(pointer: fine)').matches &&
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function ChromeFollower({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
-  const [enabled] = useState(enabledFor);
+  const [enabled] = useState(chromeFollowerEnabled);
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
@@ -217,6 +218,8 @@ export function ChromeFollower({ sectionRef }: { sectionRef: React.RefObject<HTM
       gl.deleteProgram(prog);
       gl.deleteShader(vs);
       gl.deleteShader(fs);
+      // free the context now (see GLSlot)
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [enabled, sectionRef]);
 

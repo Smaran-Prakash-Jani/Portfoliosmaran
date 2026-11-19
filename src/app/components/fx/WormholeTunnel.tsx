@@ -507,6 +507,8 @@ export function WormholeTunnel({
         gl.deleteShader(p.vs);
         gl.deleteShader(p.fs);
       }
+      // free the context now (see GLSlot); waiting for GC keeps it counted against the page's limit
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [progress, ignoreCover, clearCentre]);
 

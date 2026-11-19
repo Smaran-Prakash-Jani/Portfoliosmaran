@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useCallback, useRef, useState } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { motion, useMotionTemplate, useTransform, type MotionValue } from 'motion/react';
 import { useScrollProgress } from '../lib/useScrollProgress';
 
@@ -108,6 +109,7 @@ export function Process() {
   return (
     <section id="process" ref={sectionRef} aria-label="Process" className="relative z-10 w-full h-[330svh] md:h-[380svh]">
       <div className="sticky top-0 h-svh w-full overflow-hidden">
+        <GLSlot>
         <Suspense fallback={null}>
           <ShardMorph
             sectionRef={sectionRef}
@@ -117,6 +119,7 @@ export function Process() {
             className="absolute inset-0 w-full h-full [mask-image:linear-gradient(to_bottom,transparent,#000_10%,#000_90%,transparent)]"
           />
         </Suspense>
+        </GLSlot>
 
         {/* Invisible hotspot the scene keeps over the shape: the cursor locks onto it, a click opens it */}
         <button

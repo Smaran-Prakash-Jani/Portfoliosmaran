@@ -377,6 +377,8 @@ export function ChromeTracker({ className }: { className?: string }) {
       gl.deleteProgram(prog);
       gl.deleteShader(vs);
       gl.deleteShader(fs);
+      // free the context now (see GLSlot)
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 

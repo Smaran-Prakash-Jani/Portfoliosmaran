@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import {
   motion,
   useAnimationControls,
@@ -416,7 +417,9 @@ export function MenuOverlay({ open, onOpenChange }: { open: boolean; onOpenChang
           {/* Backdrop: the hero's silver tunnel, calmer, with a dark middle so the links stay readable */}
           <div aria-hidden="true" className="pointer-events-none fixed inset-0">
             <motion.div variants={tunnelVariants} className="absolute inset-0">
-              <WormholeTunnel progress={calm} ignoreCover paused={!mounted} className="absolute inset-0 w-full h-full" />
+              <GLSlot always>
+                <WormholeTunnel progress={calm} ignoreCover paused={!mounted} className="absolute inset-0 w-full h-full" />
+              </GLSlot>
             </motion.div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,3,11,0.88)_0%,rgba(5,3,11,0.55)_45%,transparent_80%)]" />
             <motion.div className="absolute inset-0" style={{ background: glow }} />

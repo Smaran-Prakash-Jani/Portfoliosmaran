@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { canvasDpr } from '../lib/quality';
 import { motion, useMotionValueEvent } from 'motion/react';
 import Crosshair from './reactbits/Crosshair';
@@ -97,6 +98,7 @@ export function Portrait() {
           <div className="order-1 lg:order-2 relative mx-auto w-full max-w-[min(78vw,560px)] lg:max-w-none">
             <div ref={frameRef} className="relative aspect-square w-full" data-cursor-label="Develop">
               {(arrived || prepared) && (
+                <GLSlot>
                 <Suspense fallback={null}>
                   <DitherVeil
                     hold={!arrived}
@@ -117,6 +119,7 @@ export function Portrait() {
                     wander
                   />
                 </Suspense>
+                </GLSlot>
               )}
               <Crosshair containerRef={frameRef} color="#c4b5fd" opacity={0.7} smoothing={0.25} targetEffect="none" showCoordinates />
               {/* viewfinder corners and readouts */}

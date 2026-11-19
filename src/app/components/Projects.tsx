@@ -1,6 +1,7 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy, useRef, useState } from 'react';
+import { GLSlot } from './fx/GLSlot';
 import { canvasDpr, qualityTier } from '../lib/quality';
-import { motion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { ArrowUpRight, Lock } from 'lucide-react';
 // WebGL (ogl) ripples: loaded on demand; the plain image shows until then
 const RippleDistortion = lazy(() => import('./reactbits/RippleDistortion'));
@@ -11,6 +12,7 @@ import { GhostNumeral, ScrollRevealText, TiltMedia } from './fx/ScrollFx';
 /** A project image as a liquid surface: the cursor sends ripples through it; colour comes in on hover. */
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
   const [hover, setHover] = useState(false);
+  const still = <img src={src} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />;
   return (
     <div
       role="img"
@@ -19,9 +21,8 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
-      <Suspense
-        fallback={<img src={src} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale" />}
-      >
+      <GLSlot fallback={still}>
+      <Suspense fallback={still}>
         <RippleDistortion
           src={src}
           grayscale={!hover}
@@ -37,6 +38,28 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
         maxDpr={canvasDpr(2)}
         />
       </Suspense>
+      </GLSlot>
+    </div>
+  );
+}
+
+/** The bottom-up wipe that opens a project image. It watches an unclipped wrapper: Chrome's
+ *  IntersectionObserver measures the clipped box, so the fully clipped image only counted as
+ *  "in view" once its bottom edge was, and stayed blank if you landed with its top above the fold. */
+function WipeReveal({ children, className, ...rest }: React.ComponentProps<typeof motion.div>) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' });
+  return (
+    <div ref={ref} data-gl-zone>
+      <motion.div
+        {...rest}
+        className={className}
+        initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
+        animate={inView ? { clipPath: 'inset(0% 0% 0% 0%)' } : undefined}
+        transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
+      >
+        {children}
+      </motion.div>
     </div>
   );
 }
@@ -178,12 +201,8 @@ export function Projects() {
             {/* Image Container with Technical Corners: wipes open from the bottom when it scrolls in,
                 then tilts towards the mouse */}
             <TiltMedia className="relative" >
-            <motion.div
+            <WipeReveal
               data-cursor-label="Private"
-              initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
-              whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-              viewport={{ once: true, margin: '0px 0px -15% 0px' }}
-              transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
               className="relative aspect-[4/5] overflow-hidden bg-white/[0.01] border border-white/[0.02]"
             >
               {/* Corner Accents */}
@@ -202,7 +221,7 @@ export function Projects() {
               <ParallaxLayer>
                 <ProjectImage src={project.image} alt={project.title} />
               </ParallaxLayer>
-            </motion.div>
+            </WipeReveal>
             </TiltMedia>
 
             {/* Typography & Content */}
