@@ -138,6 +138,28 @@ export function Projects() {
       stack: ['FastAPI', 'Next.js', 'Python', 'Threat Intel'],
       links: [{ label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/BlackTrace' }],
     },
+    {
+      id: '08',
+      title: 'Orbit',
+      category: 'Desktop / Systems',
+      description: 'A local control center for Linux and Windows in a translucent window: live CPU, memory, disk and network gauges, a process list, folder-size scans and health checks that explain what they found. No account, no cloud. Exported reports strip hostnames, usernames, IP addresses and file paths.',
+      stack: ['Electron', 'Node.js', 'systeminformation', 'Flatpak'],
+      links: [
+        { label: 'Download', href: 'https://github.com/Smaran-Prakash-Jani/orbit-desktop/releases/latest' },
+        { label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/orbit-desktop' },
+      ],
+    },
+    {
+      id: '09',
+      title: 'Orbit Relay',
+      category: 'Linux / Repair Tools',
+      description: "Orbit's repair companion for Linux. It finds Flatpak apps whose permissions were changed, shows the exact file before resetting it, keeps a backup you can undo, checks the audio service and builds a support report with no personal data.",
+      stack: ['Electron', 'Node.js', 'Flatpak', 'systemd'],
+      links: [
+        { label: 'Download', href: 'https://github.com/Smaran-Prakash-Jani/orbit-relay/releases/latest' },
+        { label: 'Source', href: 'https://github.com/Smaran-Prakash-Jani/orbit-relay' },
+      ],
+    },
   ];
 
   return (
